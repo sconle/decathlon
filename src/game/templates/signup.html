@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un compte</title>
+    <script>
+        function verif(){
+            const pw = document.getElementById("password").value
+            const pw2 = document.getElementById("password_2").value
+            if (pw.toString() != pw2.toString()){
+                alert("Le mot de passe n'est pas le même")
+                return false
+            }
+            return true
+        }
+    </script>
+</head>
+<body>
+    <form name="form" action="/createuser/" onsubmit= "return verif()" method="post"> {% csrf_token %}
+        <label for="pseudo">Entrez votre pseudo</label>
+        <input name="pseudo" id ="pseudo">
+        <br>
+        <label for="password">Entrez votre mot de passe</label>
+        <input type="password" name="password" id ="password">
+
+        <label for="password_2">Entrez votre mot de passe à nouveau</label>
+        <input type="password" name="password_2" id ="password_2">
+        <br>
+        <label for="mail">Entrez votre adresse mail</label>
+        <input type="email" name="mail" id ="mail">
+
+        <input type="submit" value="Créer un compte">
+    </form>
+    <button>Retour à la page de connexion</button>
+    <script>
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', event => {
+            location.href="/"
+        });
+    </script>
+</body>
+</html>

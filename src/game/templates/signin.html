@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de connexion</title>
+</head>
+<body>
+ceci est une  page de connexion
+    <button>Se créer un compte</button>
+    <script>
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', event => {
+            location.href="/signup"
+        });
+    </script>
+    <form name="form" action="/" method="post"> {% csrf_token %}
+        <label for="Pseudo">Entrez votre pseudo</label>
+        <input name="pseudo" id ="pseudo">
+        <br>
+        <label for="password">Entrez votre mot de passe</label>
+        <input type="password" name="password" id ="password">
+
+        <input type="submit" value="Se connecter">
+    </form>
+</body>
+</html>

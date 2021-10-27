@@ -19,5 +19,8 @@ from game.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name = "index")
+    path('', index, name="index"),
+    path('signup/', signup, name="signup"),
+    path('createuser/', createUser, name="createuser"),
+    path('logout/', logout, name="logout")
 ]

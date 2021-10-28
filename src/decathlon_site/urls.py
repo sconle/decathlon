@@ -24,5 +24,6 @@ urlpatterns = [
     path('createuser/', createUser, name="createuser"),
     path('logout/', logout, name="logout"),
     path('javelot/settings/', javelot_settings, name="javelot_settings"),
-    path('javelot/play/', javelot_play, name="javelot_play")
+    path('javelot/play/', javelot_play, name="javelot_play"),
+    path('javelot/roll_dice/', roll_dice, name="roll-dice")
 ]

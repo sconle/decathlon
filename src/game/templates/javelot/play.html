@@ -3,8 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Jouer au javelot</title>
+    <script>
+        let conserv = {}
+        function conserver(id){
+            const de = document.querySelector(id);
+                if (de.value % 2) {
+                    if (de.style.backgroundColor != "red"){
+                        de.style.backgroundColor = "red";
+                        conserv[id.substr(id.length - 1).toString()] = (parseInt(de.value));
+                    }
+                    else {
+                        de.style.backgroundColor = "";
+                        delete conserv[id.substr(id.length - 1).toString()];
+                    }
+                }
+        }
+    </script>
 </head>
 <body>
-nombre de joueur {{nombre_de_joueur}}
+id {{id}}
+nombre de joueur {{number}}
+Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois sur "Lancez les dés" !
+    <p id="joueur">Tour du {{joueur}}</p>
+    <br>
+    <p id="ajax">Tour restant: {{restant}}</p>
+    <label>Lancer de dés</label>
+    <input id="id" style="display: none" value="{{id}}">
+    <input id="number" style="display: none" value="{{number}}">
+    <input type="button" onclick='conserver("#de1")' id="de1" value="">
+    <input type="button" onclick='conserver("#de2")'id="de2" value="">
+    <input type="button" onclick='conserver("#de3")'id="de3" value="">
+    <input type="button" onclick='conserver("#de4")'id="de4" value="">
+    <input type="button" onclick='conserver("#de5")'id="de5" value="">
+    <input type="button" onclick='conserver("#de6")'id="de6" value="">
+
+
+
+    <input id="lancer" type="submit" value="Lancer les dés">
+
+<script>
+        const id = document.querySelector("#id").value;
+        const number = document.querySelector("#number").value;
+        document.querySelector("#lancer").addEventListener("click", event => {
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('number', number);
+            formData.append('conserv', JSON.stringify(conserv));
+            const request = new Request('{% url "roll-dice" %}', {method: 'POST', body: formData});
+            fetch(request)
+                .then(response => response.json())
+                .then(result => {
+                    document.querySelector("#de1").value = result["de1"];
+                    document.querySelector("#de2").value = result["de2"];
+                    document.querySelector("#de3").value = result["de3"];
+                    document.querySelector("#de4").value = result["de4"];
+                    document.querySelector("#de5").value = result["de5"];
+                    document.querySelector("#de6").value = result["de6"];
+                    document.querySelector("#joueur").innerHTML = "Tour du " + result["joueur"];
+            })
+        })
+</script>
+
 </body>
 </html>

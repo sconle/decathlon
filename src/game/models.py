@@ -19,8 +19,7 @@ def dict_dice():
 
 
 def dict_keeped():
-    return {"keeped" : []
-    }
+    return {}
 
 
 class JavelinThrow(models.Model):
@@ -35,3 +34,4 @@ class JavelinThrow(models.Model):
     def max_score(self):
         return max(self.scoreboard, key=self.scoreboard.get), \
                self.scoreboard[max(self.scoreboard, key=self.scoreboard.get)]
+

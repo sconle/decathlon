@@ -22,5 +22,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('signup/', signup, name="signup"),
     path('createuser/', createUser, name="createuser"),
-    path('logout/', logout, name="logout")
+    path('logout/', logout, name="logout"),
+    path('javelot/settings/', javelot_settings, name="javelot_settings"),
+    path('javelot/play/', javelot_play, name="javelot_play")
 ]

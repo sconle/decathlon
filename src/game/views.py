@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout as true_logout
 
+from game.models import *
+
 
 def index(request):
     if request.POST.get("pseudo") is not None and str(request.POST.get("pseudo")) != "" \
@@ -24,9 +26,10 @@ def createUser(request):
 
         try:
             User.objects.get(username=request.POST.get("pseudo"))
-            existUser = True
         except:
             existUser = False
+        else:
+            existUser = True
         if existUser:
             return render(request, "user_exist.html")
         else:
@@ -43,3 +46,12 @@ def signup(request):
 def logout(request):
     true_logout(request)
     return redirect('/')
+
+
+def javelot_settings(request):
+    return render(request, "javelot/settings.html")
+
+
+def javelot_play(request):
+    numberPlayer = request.POST.get("number-player")
+    return render(request, "javelot/play.html", {'nombre_de_joueur':numberPlayer})

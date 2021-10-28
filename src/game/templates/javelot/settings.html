@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lancer de javelot</title>
+</head>
+<body>
+    <form name="form-number" method="post" action="/javelot/play/"> {% csrf_token %}
+        <label for="number-player">Combien de joueur ?</label>
+        <select name="number-player" id="number-player">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <br>
+        <input type="submit" value="Jouer !">
+    </form>
+</body>
+</html>

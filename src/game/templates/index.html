@@ -3,11 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Page de Connexion</title>
+    <script>
+        const idlist = ['but0','but1','but2','but3','but4','but5','but6','but7','but8','but9','but10','return']
+        const visibilitylist1 = ['none','','','','','','','','','','','']
+        const visibilitylist2 = ['','none','none','none','none','none','none','none','none','none','none','none']
+        function setVisibility(visibilitylist) {
+            idlist.forEach(function(id, index){
+                console.log(id)
+                document.getElementById(id).style.display = visibilitylist[index];
+            })
+        }
+    </script>
 </head>
 <body>
     <div>
-        ceci est une page index
-        <form action="/logout">
+        Décathlon
+        <br>
+        <input id="but0" type=button name=jouer value='Jouer' onclick="setVisibility(visibilitylist1)">
+        <div>
+            <input id="but1" type=button style="display: none;background-color:
+red" name=100metres value='100 mètres'>
+            <input id="but2" type=button style="display: none;background-color:
+red" name=sautlongueur value='Saut en longueur'>
+            <input id="but3" type=button style="display: none;background-color:
+red" name=lancerpoids value='Lancer de poids'>
+            <input id="but4" type=button style="display: none;background-color:
+red" name=sauthauteur value='Saut en hauteur'>
+            <input id="but5" type=button style="display: none;background-color:
+red" name=400metres value='400 mètres'>
+            <input id="but6" type=button style="display: none;background-color:
+red" name=110metreshaies value='110 mètres haies'>
+            <input id="but7" type=button style="display: none;background-color:
+red" name=lancerdisque value='Lancer de disque'>
+            <input id="but8" type=button style="display: none;background-color:
+red" name=sautperche value='Saut à la perche'>
+            <a href="/javelot/settings"><input id="but9" type=button style="display: none" name=lancerjavelot onclick="" value='Lancer de javelot'>
+            <input id="but10" type=button style="display: none;background-color:
+red" name=1500metres value='1500 mètres'>
+            <input id="return" type=button style="display: none" name="return" value="Retour" onclick="setVisibility(visibilitylist2)">
+        </div>
+        <form action="/logout"> {% csrf_token %}
             <button type="submit">Déconnexion</button>
         </form>
     </div>

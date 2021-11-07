@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from game.views import *
 
 urlpatterns = [
@@ -25,5 +25,6 @@ urlpatterns = [
     path('logout/', logout, name="logout"),
     path('javelot/settings/', javelot_settings, name="javelot_settings"),
     path('javelot/play/', javelot_play, name="javelot_play"),
-    path('javelot/roll_dice/', roll_dice, name="roll-dice")
+    path('javelot/roll_dice/', roll_dice, name="roll-dice"),
+    re_path(r'^javelot/result/(?P<game_id>[0-9]+)/$', result, name="result")
 ]

@@ -6,15 +6,16 @@
     <script>
         let conserv = {}
         function conserver(id){
-            const de = document.querySelector(id);
+            const de = document.getElementById(id);
+            const idint = parseInt(id);
                 if (de.value % 2) {
                     if (de.style.backgroundColor != "red"){
                         de.style.backgroundColor = "red";
-                        conserv[id.substr(id.length - 1).toString()] = (parseInt(de.value));
+                        conserv[idint] = (parseInt(de.value));
                     }
-                    else {
+                    else{
                         de.style.backgroundColor = "";
-                        delete conserv[id.substr(id.length - 1).toString()];
+                        delete conserv[idint];
                     }
                 }
         }
@@ -29,15 +30,14 @@ Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois s
     <p id="ajax">Tour restant: {{restant}}</p>
     <label>Lancer de dés</label>
     <input id="id" style="display: none" value="{{id}}">
+    <input id="player" style="display: none" value="{{joueur}}">
     <input id="number" style="display: none" value="{{number}}">
-    <input type="button" onclick='conserver("#de1")' id="de1" value="">
-    <input type="button" onclick='conserver("#de2")'id="de2" value="">
-    <input type="button" onclick='conserver("#de3")'id="de3" value="">
-    <input type="button" onclick='conserver("#de4")'id="de4" value="">
-    <input type="button" onclick='conserver("#de5")'id="de5" value="">
-    <input type="button" onclick='conserver("#de6")'id="de6" value="">
-
-
+    <input type="button" onclick='conserver("1")' id="1" value="">
+    <input type="button" onclick='conserver("2")' id="2" value="">
+    <input type="button" onclick='conserver("3")' id="3" value="">
+    <input type="button" onclick='conserver("4")' id="4" value="">
+    <input type="button" onclick='conserver("5")' id="5" value="">
+    <input type="button" onclick='conserver("6")' id="6" value="">
 
     <input id="lancer" type="submit" value="Lancer les dés">
 
@@ -45,23 +45,49 @@ Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois s
         const id = document.querySelector("#id").value;
         const number = document.querySelector("#number").value;
         document.querySelector("#lancer").addEventListener("click", event => {
+            const nplayer = document.querySelector(("#player")).value;
             let formData = new FormData();
             formData.append('id', id);
             formData.append('number', number);
             formData.append('conserv', JSON.stringify(conserv));
+            formData.append('nplayer', nplayer);
             const request = new Request('{% url "roll-dice" %}', {method: 'POST', body: formData});
             fetch(request)
                 .then(response => response.json())
                 .then(result => {
-                    document.querySelector("#de1").value = result["de1"];
-                    document.querySelector("#de2").value = result["de2"];
-                    document.querySelector("#de3").value = result["de3"];
-                    document.querySelector("#de4").value = result["de4"];
-                    document.querySelector("#de5").value = result["de5"];
-                    document.querySelector("#de6").value = result["de6"];
-                    document.querySelector("#joueur").innerHTML = "Tour du " + result["joueur"];
-            })
-        })
+                    console.log(result["redirect"], typeof result["redirect"]);
+                    if(result["redirect"]){
+                        var form = $('<form action="http://www.google.com" method="post">' +
+                          '<input type="text" name="api_url" value="{{id}}" />' +
+                          '</form>');
+                        $('body').append(form);
+                        form.submit();
+                    }
+                    else{
+                        conserv = {}
+                        document.getElementById("1").value = result["de1"];
+                        document.getElementById("2").value = result["de2"];
+                        document.getElementById("3").value = result["de3"];
+                        document.getElementById("4").value = result["de4"];
+                        document.getElementById("5").value = result["de5"];
+                        document.getElementById("6").value = result["de6"];
+                        document.querySelector("#player").value = result["joueur"];
+                        document.querySelector("#joueur").innerHTML = "Tour du " + result["joueur"];
+                        document.querySelector("#ajax").innerHTML = "Tour restant: "  + result["restant"]
+                        console.log(result["keeped"]);
+                        for(let i of result["keeped"]){
+                            document.getElementById(i).style.display = "none";
+                            document.getElementById(i).style.backgroundColor = "";
+                        }
+                        if(result["joueur"] != result["ancien_joueur"]){
+                            for(let j = 0;j+=1; j<=6){
+                                document.getElementById(j.toString()).style.backgroundColor = "";
+                                document.getElementById(j.toString()).style.display = "";
+                            }
+                        }
+                    }
+            });
+        });
 </script>
 
 </body>

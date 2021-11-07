@@ -44,6 +44,7 @@ def createUser(request):
             login(request, user)
     return redirect('/')
 
+
 def signup(request):
     return render(request, "signup.html")
 
@@ -72,20 +73,20 @@ def javelot_play(request):
                                                  "de5": game0.dice_value["5"],
                                                  "de6": game0.dice_value["6"],
                                                  "joueur": game0.currentPlayer,
-                                                 "restant": game0.remaining_attempts
-
+                                                 "restant": game0.remaining_attempts,
                                                  })
 
 @csrf_exempt
 def roll_dice(request):
+    redirect = False
     number = [1, 2, 3, 4, 5, 6]
     id = request.POST.get("id")
     number_player = request.POST.get("number")
-    conserv = request.POST.get("conserv")
-    print(conserv)
-    conserv = json.loads(conserv)
+    old_player = request.POST.get("nplayer")
+    print(old_player)
+    conserv = json.loads(request.POST.get("conserv"))
     game = JavelinThrow.objects.get(pk=id)
-    if conserv == game.dice_keeped:
+    if conserv == {} and game.dice_value != {"1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1}:
         impair = 0
         for dice in number:
             keeped_in_if = list(game.dice_keeped.keys())
@@ -104,20 +105,34 @@ def roll_dice(request):
         else:
             game.currentPlayer = game.currentPlayer[:-1] + "1"
             if game.remaining_attempts == 1:
-                return render(request, "javelot/resultat.html")
+                redirect =True
+                #return render(request, "javelot/resultat.html")
             else:
                 game.remaining_attempts -= 1
     game.dice_keeped.update(conserv)
     for i in number:
-        try:
-            game.dice_keeped[str(i)]
-        except:
+        if str(i) not in game.dice_keeped:
             game.dice_value[f"{i}"] = random.randint(1, 6)
+
     game.save()
     keeped = list(game.dice_keeped.keys())
     message = {f"de{k}": game.dice_value[f"{k}"] for k in number}
     message.update({f"deKeeped{int(k)}": game.dice_value[f"{int(k)}"] for k in keeped})
     message.update({"joueur": game.currentPlayer,
+                    "ancien_joueur": old_player,
                     "restant": game.remaining_attempts,
+                    "keeped": keeped,
+                    "redirect": redirect
                      })
+    print(message, game.currentPlayer)
     return JsonResponse(message)
+
+
+def result(request, game_id):
+    id = int(game_id)
+    game = JavelinThrow.objects.get(pk=id)
+    message = {"id": id}
+    for i in [1,2,3,4]:
+        message.update({f"player{i}": game.scoreboard[f"player{i}"]})
+    print(message)
+    return render(request, 'javelot/resultat.html', message)

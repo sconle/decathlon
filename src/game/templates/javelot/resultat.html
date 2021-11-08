@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>resultat</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 </head>
 <body>
-<p> {{id}} </p>
+<input style="display: none" id="nb_joueur" value="{{nplayer}}">
+<input style="display: none" id="1" value="{{player1}}">
+<input style="display: none" id="2" value="{{player2}}">
+<input style="display: none" id="3" value="{{player3}}">
+<input style="display: none" id="4" value="{{player4}}">
+<table class="table">
+        <thead>
+          <tr>
+            <th>Joueur</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+      </table>
+    <script>
+        let b = document.body;
+        const nb_joueur = document.querySelector("#nb_joueur").value;
+        let tbody = document.getElementById("tbody");
+        let p = document.getElementById("p");
+        var winner = "player1"
+        var winner_score = document.getElementById(1).value
+        for(var j=2;j<=nb_joueur;j++){
+            if (parseInt(document.getElementById(j).value) > parseInt(winner_score)){
+                winner = "player" + j.toString()
+                winner_score = document.getElementById(j).value
+            }
+        }
+        for(var i=1;i<=nb_joueur;i++){
+            var score = document.getElementById(i).value;
+            var play = "player" + i;
+            let tdplay = document.createElement("td");
+            let tdscore = document.createElement("td");
+            tdplay.textContent = play;
+            tdscore.textContent = score;
+            let tr = document.createElement("tr");
+            tr.append(tdplay);
+            tr.append(tdscore);
+            if(play == winner){
+                tr.append("Gagnant !")
+            }
+            tbody.append(tr);
+        }
+    </script>
 </body>
 </html>

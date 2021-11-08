@@ -62,7 +62,7 @@ def javelot_play(request):
     numberPlayer = request.POST.get("number-player")
     gameName = request.POST.get("game-name")
 
-    game0 = JavelinThrow(name=gameName)
+    game0 = JavelinThrow(name=gameName, number_of_player=numberPlayer)
     game0.save()
     return render(request, "javelot/play.html", {"id": game0.id,
                                                  "number": numberPlayer,
@@ -87,16 +87,17 @@ def roll_dice(request):
     conserv = json.loads(request.POST.get("conserv"))
     game = JavelinThrow.objects.get(pk=id)
     if conserv == {} and game.dice_value != {"1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1}:
+        sum = 0
         impair = 0
+        keeped_in_if = list(game.dice_keeped.keys())
+        print(list(game.dice_keeped.keys()))
         for dice in number:
-            keeped_in_if = list(game.dice_keeped.keys())
-            if dice not in keeped_in_if:
+            if str(dice) not in keeped_in_if:
                 impair += game.dice_value[str(dice)] % 2
-        if impair != 0:
-            sum = 0
+        if impair != 0 or len(list(game.dice_keeped.keys())) == 6:
             for dice in game.dice_keeped:
                 sum += game.dice_value[str(dice)]
-                game.scoreboard[game.currentPlayer] += sum
+            game.scoreboard[game.currentPlayer] += sum
         game.dice_keeped = {}
         if int(game.currentPlayer[-1]) + 1 <= int(number_player):
             chiffre = int(game.currentPlayer[-1])
@@ -124,15 +125,13 @@ def roll_dice(request):
                     "keeped": keeped,
                     "redirect": redirect
                      })
-    print(message, game.currentPlayer)
     return JsonResponse(message)
 
 
 def result(request, game_id):
     id = int(game_id)
     game = JavelinThrow.objects.get(pk=id)
-    message = {"id": id}
-    for i in [1,2,3,4]:
+    message = {"id": id, "nplayer": game.number_of_player, "nb_joueur": len(game.scoreboard.keys())}
+    for i in range(1,len(game.scoreboard.keys())+1):
         message.update({f"player{i}": game.scoreboard[f"player{i}"]})
-    print(message)
     return render(request, 'javelot/resultat.html', message)

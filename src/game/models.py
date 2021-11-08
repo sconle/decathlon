@@ -30,6 +30,7 @@ class JavelinThrow(models.Model):
     scoreboard = models.JSONField(default=dict_scoreboard)
     remaining_attempts = models.IntegerField(default=3)
     is_online = models.BooleanField(default=True)
+    number_of_player = models.IntegerField(default=4)
 
     def max_score(self):
         return max(self.scoreboard, key=self.scoreboard.get), \

@@ -22,8 +22,6 @@
     </script>
 </head>
 <body>
-id {{id}}
-nombre de joueur {{number}}
 Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois sur "Lancez les dés" !
     <p id="joueur">Tour du {{joueur}}</p>
     <br>
@@ -57,11 +55,7 @@ Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois s
                 .then(result => {
                     console.log(result["redirect"], typeof result["redirect"]);
                     if(result["redirect"]){
-                        var form = $('<form action="http://www.google.com" method="post">' +
-                          '<input type="text" name="api_url" value="{{id}}" />' +
-                          '</form>');
-                        $('body').append(form);
-                        form.submit();
+                        window.location.href = '/javelot/result/' + id
                     }
                     else{
                         conserv = {}
@@ -73,7 +67,7 @@ Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois s
                         document.getElementById("6").value = result["de6"];
                         document.querySelector("#player").value = result["joueur"];
                         document.querySelector("#joueur").innerHTML = "Tour du " + result["joueur"];
-                        document.querySelector("#ajax").innerHTML = "Tour restant: "  + result["restant"]
+                        document.querySelector("#ajax").innerHTML = "Tour restant: "  + result["restant"];
                         console.log(result["keeped"]);
                         for(let i of result["keeped"]){
                             document.getElementById(i).style.display = "none";

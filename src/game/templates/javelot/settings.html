@@ -3,20 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Lancer de javelot</title>
+    <style>
+    body{
+        background: url("/static/images/stade.png");
+        background-position: center;
+        color: white;
+        height: 650px;
+     }
+    @font-face{
+        font-family: "Jackport_reg";
+        src: url("/static/fonts/JACKPORT_REGULAR_NCV.ttf");
+    }
+
+    #form_login {
+    left: 40%;
+    top: 90%;
+    margin-left: -25%;
+    position: absolute;
+    margin-top: -25%;
+    }
+
+    .h {
+        font-family: "Jackport_reg";
+        font-size: 30px;
+        background: black;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow:0 0 1px #ffffff;
+        }
+
+      .button {
+          font-family: "Jackport_reg";
+          background-color: white;
+          color: black;
+          border: 2px solid #b50000;
+          padding: 20px 48px;
+          border-radius: 8px;
+          transition-duration: 0.4s;
+      }
+
+      .button:hover {
+        background-color: #b50000;
+        color: white;
+      }
+
+      .input{
+          width: 40%;
+          border: none;
+          border-bottom: 2px solid red;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border-radius: 4px;
+          background: none;
+          color: white;
+          font-size: large;
+          text-shadow:0 0 1px #000000;
+      }
+
+    </style>
 </head>
 <body>
-    <form name="form-number" method="post" action="/javelot/play/"> {% csrf_token %}
-        <label for="number-player">Combien de joueur ?</label>
-        <select name="number-player" id="number-player">
+    <form id="form_login" name="form-number" method="post" action="/javelot/play/"> {% csrf_token %}
+        <label class="h" for="number-player">Combien de joueur ?</label>
+        <select style="width:20%; background-color: white; color: black" class="input" name="number-player" id="number-player">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
         </select>
         <br>
-        <label for="game-name">Entrer le nom de la partie</label>
-        <input name="game-name" id="game-name">
+        <label class="h" for="game-name">Entrer le nom de la partie</label>
+        <input class="input" name="game-name" id="game-name">
         <br>
-        <input type="submit" value="Jouer !">
+        <input class="button" type="submit" value="Jouer !">
     </form>
 </body>
 </html>

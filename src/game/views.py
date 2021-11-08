@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from game.models import *
 
-
+@csrf_exempt
 def index(request):
     if request.POST.get("pseudo") is not None and str(request.POST.get("pseudo")) != "" \
             and str(request.POST.get("password")) != "":

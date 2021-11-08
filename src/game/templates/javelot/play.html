@@ -20,24 +20,62 @@
                 }
         }
     </script>
+        <style>
+    body{
+        background: url("/static/images/javelot.png");
+        background-position: center;
+        color: white;
+        height: 650px;
+     }
+    @font-face{
+        font-family: "Jackport_reg";
+        src: url("/static/fonts/JACKPORT_REGULAR_NCV.ttf");
+    }
+
+    .h {
+        font-family: "Jackport_reg";
+        font-size: 30px;
+        background: black;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow:0 0 1px #ffffff;
+        }
+
+      .button {
+          font-family: "Jackport_reg";
+          background-color: white;
+          color: black;
+          border: 2px solid #b50000;
+          padding: 10px 24px;
+          border-radius: 8px;
+          transition-duration: 0.4s;
+      }
+
+      .button:hover {
+        background-color: #b50000;
+        color: white;
+      }
+
+    </style>
 </head>
 <body>
-Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois sur "Lancez les dés" !
-    <p id="joueur">Tour du {{joueur}}</p>
+<h1 class="h">Si vous ne voulez (ou pouvez) plus lancer les dés, appuyez une dernière fois sur "Lancez les dés" !</h1>
     <br>
-    <p id="ajax">Tour restant: {{restant}}</p>
-    <label>Lancer de dés</label>
+    <p style="font-size: 25px" class="h" id="joueur">Tour du {{joueur}}</p>
+    <br>
+    <p id="ajax" style="font-size: 25px" class="h">Tour restant: {{restant}}</p>
+    <label style="font-size: 25px" class="h">Lancer de dés</label>
     <input id="id" style="display: none" value="{{id}}">
     <input id="player" style="display: none" value="{{joueur}}">
     <input id="number" style="display: none" value="{{number}}">
-    <input type="button" onclick='conserver("1")' id="1" value="">
-    <input type="button" onclick='conserver("2")' id="2" value="">
-    <input type="button" onclick='conserver("3")' id="3" value="">
-    <input type="button" onclick='conserver("4")' id="4" value="">
-    <input type="button" onclick='conserver("5")' id="5" value="">
-    <input type="button" onclick='conserver("6")' id="6" value="">
-
-    <input id="lancer" type="submit" value="Lancer les dés">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("1")' id="1" value="">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("2")' id="2" value="">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("3")' id="3" value="">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("4")' id="4" value="">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("5")' id="5" value="">
+    <input style="font-size: 30px" class="button" type="button" onclick='conserver("6")' id="6" value="">
+    <br><br>
+    <input class="button" id="lancer" type="submit" value="Lancer les dés">
 
 <script>
         const id = document.querySelector("#id").value;

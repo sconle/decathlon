@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un compte</title>
+    <script>
+        function verif(){
+            const pw = document.getElementById("password").value
+            const pw2 = document.getElementById("password_2").value
+            if (pw.toString() != pw2.toString()){
+                alert("Le mot de passe n'est pas le même")
+                return false
+            }
+            return true
+        }
+    </script>
+    <style>
+    body{
+        background: url("/static/images/stade.png");
+        background-position: center;
+        color: white;
+        height: 650px;
+     }
+    @font-face{
+        font-family: "Jackport_reg";
+        src: url("/static/fonts/JACKPORT_REGULAR_NCV.ttf");
+    }
+
+    #form_login {
+    left: 40%;
+    top: 90%;
+    margin-left: -25%;
+    position: absolute;
+    margin-top: -25%;
+    }
+
+    .h {
+        font-family: "Jackport_reg";
+        font-size: 30px;
+        background: black;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow:0 0 1px #ffffff;
+        }
+
+      .button {
+          font-family: "Jackport_reg";
+          background-color: white;
+          color: black;
+          border: 2px solid #b50000;
+          padding: 20px 48px;
+          border-radius: 8px;
+          transition-duration: 0.4s;
+      }
+
+      .button:hover {
+        background-color: #b50000;
+        color: white;
+      }
+
+      .input{
+          width: 20%;
+          border: none;
+          border-bottom: 2px solid red;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border-radius: 4px;
+          background: none;
+          color: white;
+          font-size: large;
+          text-shadow:0 0 1px #000000;
+      }
+
+    </style>
+</head>
+<body>
+    <form id="form_login" style="background-position: center" name="form" action="/createuser/" onsubmit= "return verif()" method="post"> {% csrf_token %}
+        <label class="h" for="pseudo">Entrez votre pseudo</label>
+        <input class="input" name="pseudo" id ="pseudo">
+        <br>
+        <label class="h" for="password">Entrez votre mot de passe</label>
+        <input class="input" type="password" name="password" id ="password">
+
+        <label class="h" for="password_2">Entrez à nouveau</label>
+        <input class="input" type="password" name="password_2" id ="password_2">
+        <br>
+        <label class="h" for="mail">Entrez votre adresse mail</label>
+        <input class="input" type="email" name="mail" id ="mail">
+
+        <input class="button" type="submit" value="Créer un compte">
+    </form>
+    <button class="button">Retour à la page de connexion</button>
+    <script>
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', event => {
+            location.href="/"
+        });
+    </script>
+</body>
+</html>

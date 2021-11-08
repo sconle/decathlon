@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Le mot de passe ou l'identifiant n'est pas correct</title>
+    <style>
+    body{
+        background: url("/static/images/stade.png");
+        background-position: center;
+        color: white;
+        height: 650px;
+     }
+    @font-face{
+        font-family: "Jackport_reg";
+        src: url("/static/fonts/JACKPORT_REGULAR_NCV.ttf");
+    }
+
+    .h {
+        font-family: "Jackport_reg";
+        font-size: 30px;
+        background: black;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow:0 0 1px #ffffff;
+        }
+
+      .button {
+          font-family: "Jackport_reg";
+          background-color: white;
+          color: black;
+          border: 2px solid #b50000;
+          padding: 10px 24px;
+          border-radius: 8px;
+          transition-duration: 0.4s;
+      }
+
+      .button:hover {
+        background-color: #b50000;
+        color: white;
+      }
+
+    </style>
+</head>
+<body>
+<h1 class="h">Désolé, le mot de passe ou l'identifiant n'est pas correct</h1>
+<button class="button" id="b">Retour à la page de connexion</button>
+<script>
+    const button = document.getElementById("b")
+
+    button.addEventListener('click', event => {
+        location.href="/"
+    });
+</script>
+</body>
+</html>
